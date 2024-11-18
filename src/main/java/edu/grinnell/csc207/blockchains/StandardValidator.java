@@ -1,7 +1,7 @@
 package edu.grinnell.csc207.blockchains;
 
 /**
- * Things that validate hashes. Simple version.
+ * Things that validate hashes. Standard version.
  *
  * @author Leo Goldman
  */
@@ -18,4 +18,4 @@ public class StandardValidator implements HashValidator {
     return (hash.length() >= 3) && (hash.get(0) == 0)
     && (hash.get(1) == 0) && (hash.get(2) == 0);
   } // isValid(Hash)
-} // SimpleValidator
+} // StandardValidator
