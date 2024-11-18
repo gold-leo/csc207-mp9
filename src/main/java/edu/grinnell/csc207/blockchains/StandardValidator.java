@@ -5,7 +5,7 @@ package edu.grinnell.csc207.blockchains;
  *
  * @author Leo Goldman
  */
-public class SimpleValidator implements HashValidator {
+public class StandardValidator implements HashValidator {
   /**
    * Determine if a hash meets some criterion.
    *
@@ -15,6 +15,7 @@ public class SimpleValidator implements HashValidator {
    * @return true if the hash is valid and false otehrwise.
    */
   public boolean isValid(Hash hash) {
-    return (hash.length() >= 1) && (hash.get(0) == 0);
+    return (hash.length() >= 3) && (hash.get(0) == 0)
+    && (hash.get(1) == 0) && (hash.get(2) == 0);
   } // isValid(Hash)
 } // SimpleValidator
