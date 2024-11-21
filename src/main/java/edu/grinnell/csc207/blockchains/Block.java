@@ -15,30 +15,30 @@ public class Block {
   // | Fields |
   // +--------+
 
-    /** =
-     * The block number in the blockchain. 
-    */
-    int num;
+  /**
+   * The block number in the blockchain.
+  */
+  int num;
 
-    /**
-     * The transaction stored in this block.
-    */
-    Transaction transaction;
-  
-    /**
-     * The hash of the previous block in the chain.
-    */
-    Hash prevHash;
-  
-    /**
-     * The nonce that makes the block's hash valid.
-    */
-    long nonce;
-  
-    /**
-     * The hash of this block, computed based on its contents.
-    */
-    Hash hash;
+  /**
+   * The transaction stored in this block.
+  */
+  Transaction transaction;
+
+  /**
+   * The hash of the previous block in the chain.
+  */
+  Hash prevHash;
+
+  /**
+   * The nonce that makes the block's hash valid.
+  */
+  long nonce;
+
+  /**
+   * The hash of this block, computed based on its contents.
+  */
+  Hash hash;
 
   // +--------------+------------------------------------------------
   // | Constructors |
@@ -49,20 +49,20 @@ public class Block {
    * previous hash, mining to choose a nonce that meets the requirements
    * of the validator.
    *
-   * @param num
+   * @param number
    *   The number of the block.
-   * @param transaction
+   * @param transac
    *   The transaction for the block.
-   * @param prevHash
+   * @param previousHash
    *   The hash of the previous block.
    * @param check
    *   The validator used to check the block.
    */
-  public Block(int num, Transaction transaction, Hash prevHash,
+  public Block(int number, Transaction transac, Hash previousHash,
       HashValidator check) {
-    this.num = num;
-    this.transaction = transaction;
-    this.prevHash = prevHash;
+    this.num = number;
+    this.transaction = transac;
+    this.prevHash = previousHash;
     long tempNonce = 0;
     Hash tempHash;
     do {
@@ -77,20 +77,20 @@ public class Block {
   /**
    * Create a new block, computing the hash for the block.
    *
-   * @param num
+   * @param number
    *   The number of the block.
-   * @param transaction
+   * @param transac
    *   The transaction for the block.
-   * @param prevHash
+   * @param previousHash
    *   The hash of the previous block.
-   * @param nonce
+   * @param aNonce
    *   The nonce of the block.
    */
-  public Block(int num, Transaction transaction, Hash prevHash, long nonce) {
-    this.num = num;
-    this.transaction = transaction;
-    this.prevHash = prevHash;
-    this.nonce = nonce;
+  public Block(int number, Transaction transac, Hash previousHash, long aNonce) {
+    this.num = number;
+    this.transaction = transac;
+    this.prevHash = previousHash;
+    this.nonce = aNonce;
     this.hash = computeHash();
   } // Block(int, Transaction, Hash, long)
 
@@ -101,11 +101,13 @@ public class Block {
   /**
    * Compute the hash of the block given all the other info already
    * stored in the block.
+   *
+   * @return new computed hash
    */
   private Hash computeHash() {
-    
+
     MessageDigest md = createMessageDigest();
-    
+
     md.update(ByteBuffer.allocate(Integer.BYTES).putInt(num).array());
     md.update(transaction.getSource().getBytes());
     md.update(transaction.getTarget().getBytes());
