@@ -108,7 +108,9 @@ public class BlockChain implements Iterable<Transaction> {
       if (!t.getSource().isEmpty()) {
         userSet.add(t.getSource());
       } // if
-      userSet.add(t.getTarget());
+      if (!t.getTarget().isEmpty()) {
+        userSet.add(t.getTarget());
+      } // if
       current = current.next;
     } // while
     return userSet;
@@ -128,7 +130,13 @@ public class BlockChain implements Iterable<Transaction> {
    * @return a new block with correct number, hashes, and such.
    */
   public Block mine(Transaction t) {
-    return new Block(this.size, t, this.lastBlock.block.getHash(), this.validator);
+    int nonce = 0;
+    Block block;
+    do {
+      block = new Block(this.size, t, this.lastBlock.block.getHash(), nonce);
+      nonce++;
+    } while (!this.validator.isValid(block.getHash()));
+    return block;
   } // mine(Transaction)
 
   /**
@@ -200,6 +208,15 @@ public class BlockChain implements Iterable<Transaction> {
         return false;
       } // if
       if (!this.validator.isValid(nextNode.block.getHash())) {
+        return false;
+      } // if
+      Block recalculatedBlock = new Block(
+          nextNode.block.getNum(),
+          nextNode.block.getTransaction(),
+          nextNode.block.getPrevHash(),
+          nextNode.block.getNonce()
+      );
+      if (!nextNode.block.getHash().equals(recalculatedBlock.getHash())) {
         return false;
       } // if
       current = nextNode;
