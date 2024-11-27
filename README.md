@@ -10,7 +10,7 @@ Authors
 
 Acknowledgements
 
-* _Forthcoming_.
+* None
 
 Description:
 
