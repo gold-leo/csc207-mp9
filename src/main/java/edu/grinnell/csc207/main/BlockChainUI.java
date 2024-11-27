@@ -108,8 +108,8 @@ public class BlockChainUI {
             chain.append(a);
           } catch (Exception e) {
             pen.printf("Invalid transation!");
-          }
-          
+          } // try/catch
+
           break;
 
         case "balance":
@@ -128,7 +128,7 @@ public class BlockChainUI {
             pen.println("Blockchain valid!");
           } catch (Exception e) {
             pen.println("Blockchain invalid!");
-          }
+          } // try/catch
           break;
 
         case "help":
@@ -153,16 +153,16 @@ public class BlockChainUI {
 
         case "transactions":
           Iterator<Transaction> t = chain.iterator();
-          while(t.hasNext()) {
+          while (t.hasNext()) {
             pen.println(t.next().toString());
-          }
+          } // while
           break;
 
         case "users":
           Iterator<String> i = chain.users();
-          while(i.hasNext()) {
+          while (i.hasNext()) {
             pen.println(i.next());
-          }
+          } // while
           break;
 
         default:

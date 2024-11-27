@@ -226,7 +226,7 @@ public class BlockChain implements Iterable<Transaction> {
 
     // Check if all the transactions add up
     Iterator<String> userIterator = this.users();
-    while(userIterator.hasNext()) {
+    while (userIterator.hasNext()) {
       if (this.balance(userIterator.next()) < 0) {
         return false;
       } // if
