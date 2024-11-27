@@ -140,7 +140,7 @@ public class BlockChain implements Iterable<Transaction> {
   } // mine(Transaction)
 
   /**
-   * Get the number of blocks curently in the chain.
+   * Get the number of blocks currently in the chain.
    *
    * @return the number of blocks in the chain, including the initial block.
    */
