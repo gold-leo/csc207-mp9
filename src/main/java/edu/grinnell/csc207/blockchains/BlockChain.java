@@ -201,6 +201,8 @@ public class BlockChain implements Iterable<Transaction> {
    * @return true if the blockchain is correct and false otherwise.
    */
   public boolean isCorrect() {
+
+    // Check hashes.
     Node current = this.firstBlock;
     while (current.next != null) {
       Node nextNode = current.next;
@@ -220,6 +222,22 @@ public class BlockChain implements Iterable<Transaction> {
         return false;
       } // if
       current = nextNode;
+    } // while
+
+    // Check if all the transactions add up
+    Iterator<String> userIterator = this.users();
+    while(userIterator.hasNext()) {
+      if (this.balance(userIterator.next()) < 0) {
+        return false;
+      } // if
+    } // while
+
+    // Check for negs
+    Iterator<Transaction> transIterator = this.iterator();
+    while (transIterator.hasNext()) {
+      if (transIterator.next().getAmount() < 0) {
+        return false;
+      } // if
     } // while
     return true;
   } // isCorrect()
