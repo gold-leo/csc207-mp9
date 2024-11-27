@@ -7,6 +7,7 @@ import edu.grinnell.csc207.blockchains.Transaction;
 
 import edu.grinnell.csc207.util.IOUtils;
 
+import java.util.Iterator;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -99,11 +100,22 @@ public class BlockChainUI {
 
       switch (command.toLowerCase()) {
         case "append":
-          pen.printf("Command '%s' is not yet implemented", command);
+          source = IOUtils.readLine(pen, eyes, "Source (return for deposit): ");
+          target = IOUtils.readLine(pen, eyes, "Target: ");
+          amount = IOUtils.readInt(pen, eyes, "Amount: ");
+          Block a = chain.mine(new Transaction(source, target, amount));
+          try {
+            chain.append(a);
+          } catch (Exception e) {
+            pen.printf("Invalid transation!");
+          }
+          
           break;
 
         case "balance":
-          pen.printf("Command '%s' is not yet implemented", command);
+          target = IOUtils.readLine(pen, eyes, "User: ");
+          int bal = chain.balance(target);
+          pen.println("User's balance: " + bal);
           break;
 
         case "blocks":
@@ -111,7 +123,12 @@ public class BlockChainUI {
           break;
 
         case "check":
-          pen.printf("Command '%s' is not yet implemented", command);
+          try {
+            chain.check();
+            pen.println("Blockchain valid!");
+          } catch (Exception e) {
+            pen.println("Blockchain invalid!");
+          }
           break;
 
         case "help":
@@ -131,15 +148,21 @@ public class BlockChainUI {
           break;
 
         case "remove":
-          pen.printf("Command '%s' is not yet implemented", command);
+          chain.removeLast();
           break;
 
         case "transactions":
-          pen.printf("Command '%s' is not yet implemented", command);
+          Iterator<Transaction> t = chain.iterator();
+          while(t.hasNext()) {
+            pen.println(t.next().toString());
+          }
           break;
 
         case "users":
-          pen.printf("Command '%s' is not yet implemented", command);
+          Iterator<String> i = chain.users();
+          while(i.hasNext()) {
+            pen.println(i.next());
+          }
           break;
 
         default:
